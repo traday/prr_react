@@ -3,13 +3,14 @@ Rails.application.routes.draw do
     collection do
       get 'index'
     end
-
     member do
       get 'create'
       get 'update'
       get 'delete'
     end
   end
+  
+  root 'users#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
