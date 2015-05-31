@@ -19,6 +19,7 @@ gem 'jbuilder', '~> 2.0'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+gem 'haml'
 gem 'react-rails', '~> 1.0'
 
 group :development, :test do
