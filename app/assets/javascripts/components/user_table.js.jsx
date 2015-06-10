@@ -24,7 +24,7 @@ var UserTableBody = React.createClass({
 
     var rows = $.map(users, function(user) {
       var rowInfo = {
-        key: user.employee_id,
+        key: user.id,
         className: 'user-row',
         newRow: false,
         editMode: false,
@@ -59,8 +59,23 @@ var UserTable = React.createClass({
   getInitialState: function() {
     return {
       withInput: false,
-      users: this.props.users
+      users: []
     };
+  },
+  componentDidMount: function () {
+    this.loadUsersFromServer();
+  },
+  loadUsersFromServer: function () {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      success: function (users) {
+        this.setState({users: users});
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
   },
   add: function() {
     this.setState( {
