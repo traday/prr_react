@@ -2,13 +2,14 @@ var DOM = React.DOM;
 
 var UserRow = React.createClass({
   getInitialState: function() {
-    var eIdRefName = this.props.newRow ? 'newEmployeeId' : 'eId'+this.props.employeeId;
-    var userRefName = this.props.newRow ? 'newUsername' : 'user'+this.props.employeeId;
+    var eIdRefName = this.props.newRow ? 'newEmployeeId' : 'eId'+this.props.employee_id;
+    var userRefName = this.props.newRow ? 'newUsername' : 'user'+this.props.employee_id;
     return {
       newRow: this.props.newRow,
       editMode: this.props.editMode,
+      id: this.props.id,
       username: this.props.username,
-      employeeId: this.props.employeeId,
+      employee_id: this.props.employee_id,
       userRefName: userRefName,
       eIdRefName: eIdRefName,
     };
@@ -26,13 +27,13 @@ var UserRow = React.createClass({
     if(this.state.newRow) {
       this.props.save({
         username: React.findDOMNode(this.refs.newUsername).value,
-        employeeId: React.findDOMNode(this.refs.newEmployeeId).value
+        employee_id: React.findDOMNode(this.refs.newEmployeeId).value
       });
     } else {
       this.setState({
         editMode: false,
         username: React.findDOMNode(this.refs[this.state.userRefName]).value,
-        employeeId: React.findDOMNode(this.refs[this.state.eIdRefName]).value
+        employee_id: React.findDOMNode(this.refs[this.state.eIdRefName]).value
       });
     }
   },
@@ -45,7 +46,8 @@ var UserRow = React.createClass({
     if(this.state.editMode) {
       return React.createElement(
         'tr',
-        {className: 'userRow'},
+        {className: 'user-row'},
+        React.createElement( 'td', {className: 'id'}, this.state.id),
         React.createElement(
           'td',
           {className: 'username'},
@@ -54,7 +56,7 @@ var UserRow = React.createClass({
         React.createElement(
           'td',
           {className: 'employee-id'},
-          DOM.input({type: 'text', ref: this.state.eIdRefName, placeholder: 'Employee Id', defaultValue: this.state.employeeId})
+          DOM.input({type: 'text', ref: this.state.eIdRefName, placeholder: 'Employee Id', defaultValue: this.state.employee_id})
         ),
         React.createElement(
           'td',
@@ -67,20 +69,10 @@ var UserRow = React.createClass({
       return React.createElement(
         'tr',
         {className: 'userRow'},
-        React.createElement(
-          'td',
-          {className: 'username'},
-          this.state.username
-        ),
-        React.createElement(
-          'td',
-          {className: 'employee-id'},
-          this.state.employeeId
-        ),
-        React.createElement(
-          'td',
-          {className: 'button'},
-          DOM.button({onClick: this.edit}, 'Edit')
+        React.createElement( 'td', {className: 'id'}, this.state.id),
+        React.createElement( 'td', {className: 'username'}, this.state.username),
+        React.createElement( 'td', {className: 'employee-id'}, this.state.employee_id),
+        React.createElement( 'td', {className: 'button'}, DOM.button({onClick: this.edit}, 'Edit')
         )
       );
     }

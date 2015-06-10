@@ -5,17 +5,10 @@ var UserTableHeader = React.createClass({
       {key: 'thead'},
       DOM.tr(
         {className: 'userTableHeader'},
-        DOM.th(
-          {className: 'username'},
-          'Username'
-        ),
-        DOM.th(
-          {className: 'employee-id'},
-          'Employee Id'
-        ),
-        DOM.th(
-          {className: 'employee-id'},
-          DOM.button({onClick: this.props.add}, 'Add')
+        DOM.th( {className: 'id'}, 'rails id'),
+        DOM.th( {className: 'username'}, 'Username'),
+        DOM.th( {className: 'employee-id'}, 'Employee Id'),
+        DOM.th( {className: 'button-header'}, DOM.button({onClick: this.props.add}, 'Add')
         )
       )
     );
@@ -31,12 +24,13 @@ var UserTableBody = React.createClass({
 
     var rows = $.map(users, function(user) {
       var rowInfo = {
-        key: user.employeeId,
+        key: user.employee_id,
         className: 'user-row',
         newRow: false,
         editMode: false,
+        id: user.id,
         username: user.username,
-        employeeId: user.employeeId,
+        employee_id: user.employee_id,
         cancel: cancel,
         save: save
       };
@@ -48,8 +42,9 @@ var UserTableBody = React.createClass({
         className: 'user-row',
         newRow: true,
         editMode: true,
+        id: '',
         username: '',
-        employeeId: '',
+        employee_id: '',
         cancel: cancel,
         save: save
       };

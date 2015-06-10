@@ -1,10 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = {
-      users:
-      [{username: 'tom', employeeId: '1'},
-       {username: 'jane', employeeId: '2'}]
-    }
+    @users = {users: User.all}
   end
 
   def create
