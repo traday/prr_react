@@ -19,7 +19,8 @@ var UserTableBody = React.createClass({
   render: function() {
     var users = this.props.users;
     var showInput = this.props.showInput;
-    var save = this.props.save;
+    var update = this.props.update;
+    var create = this.props.create;
     var cancel = this.props.cancel;
 
     var rows = $.map(users, function(user) {
@@ -32,7 +33,7 @@ var UserTableBody = React.createClass({
         username: user.username,
         employee_id: user.employee_id,
         cancel: cancel,
-        save: save
+        update: update
       };
       return React.createElement(UserRow, rowInfo, null);
     });
@@ -46,7 +47,7 @@ var UserTableBody = React.createClass({
         username: '',
         employee_id: '',
         cancel: cancel,
-        save: save
+        create: create
       };
       rows.push(React.createElement(UserRow, inputs, null));
     }
@@ -89,7 +90,24 @@ var UserTable = React.createClass({
       users: this.state.users
     });
   },
-  save: function(user) {
+  create: function(user) {
+    this.setState( {
+      withInput: false,
+    });
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: {"user": user},
+      success: function() {
+        this.loadUsersFromServer();
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  update: function(user) {
     this.setState( {
       withInput: false,
       users: this.state.users.concat(user)
@@ -99,7 +117,8 @@ var UserTable = React.createClass({
     var bodyInfo = {
       users: this.state.users,
       showInput: this.state.withInput,
-      save: this.save,
+      create: this.create,
+      update: this.update,
       cancel: this.cancel
     };
     return(

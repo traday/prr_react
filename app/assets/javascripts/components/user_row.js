@@ -25,7 +25,7 @@ var UserRow = React.createClass({
 
   save: function() {
     if(this.state.newRow) {
-      this.props.save({
+      this.props.create({
         username: React.findDOMNode(this.refs.newUsername).value,
         employee_id: React.findDOMNode(this.refs.newEmployeeId).value
       });
