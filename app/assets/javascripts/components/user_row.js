@@ -38,6 +38,11 @@ var UserRow = React.createClass({
     }
   },
 
+  deleteRow: function() {
+    this.setState({editMode: false});
+    this.props.deleteRow(this.props.id);
+  },
+
   edit: function() {
     this.setState({editMode: true});
   },
@@ -72,8 +77,8 @@ var UserRow = React.createClass({
         React.createElement( 'td', {className: 'id'}, this.state.id),
         React.createElement( 'td', {className: 'username'}, this.state.username),
         React.createElement( 'td', {className: 'employee-id'}, this.state.employee_id),
-        React.createElement( 'td', {className: 'button'}, DOM.button({onClick: this.edit}, 'Edit')
-        )
+        React.createElement( 'td', {className: 'button'}, DOM.button({onClick: this.edit}, 'Edit')),
+        React.createElement( 'td', {className: 'button'}, DOM.button({onClick: this.deleteRow}, 'X'))
       );
     }
   }

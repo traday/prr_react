@@ -16,13 +16,14 @@ class UsersController < ApplicationController
 
   def update
     respond_to do |format|
-      format.json { hed :ok}
+      format.json { render json: :ok}
     end
   end
 
-  def delete
+  def destroy
+    User.destroy(params[:id])
     respond_to do |format|
-      format.json { hed :ok}
+      format.json { render json: :ok}
     end
   end
 end

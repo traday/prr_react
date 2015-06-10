@@ -20,6 +20,7 @@ var UserTableBody = React.createClass({
     var users = this.props.users;
     var showInput = this.props.showInput;
     var update = this.props.update;
+    var deleteRow = this.props.deleteRow;
     var create = this.props.create;
     var cancel = this.props.cancel;
 
@@ -33,6 +34,7 @@ var UserTableBody = React.createClass({
         username: user.username,
         employee_id: user.employee_id,
         cancel: cancel,
+        deleteRow: deleteRow,
         update: update
       };
       return React.createElement(UserRow, rowInfo, null);
@@ -84,6 +86,20 @@ var UserTable = React.createClass({
       users: this.state.users
     });
   },
+  deleteRow: function(id) {
+    $.ajax({
+      url: 'users/' + id + '.json', //this.props.url,// + '/' + id,
+      dataType: 'json',
+      type: 'DELETE',
+      data: {"id": id},
+      success: function() {
+        this.loadUsersFromServer();
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
   cancel: function() {
     this.setState( {
       withInput: false,
@@ -118,6 +134,7 @@ var UserTable = React.createClass({
       users: this.state.users,
       showInput: this.state.withInput,
       create: this.create,
+      deleteRow: this.deleteRow,
       update: this.update,
       cancel: this.cancel
     };
